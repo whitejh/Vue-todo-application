@@ -1,12 +1,21 @@
 <template>
   <div>
     <ul>
-      <li v-for="(todoItem, index) in todoItems" v-bind:key="todoItem.item" class="shadow">
+      <li
+        v-for="(todoItem, index) in todoItems"
+        v-bind:key="todoItem.item"
+        class="shadow"
+      >
         <span v-bind:class="{ textCompleted: todoItem.textCompleted }">
-          <i class="checkBtn fas fa-check" v-bind:class="{ checkBtnCompleted: todoItem.completed }" v-on:click="toggleComplete(todoItem, index)"></i>
-          <span v-bind:class="{ textCompleted: todoItem.completed }">{{ todoItem.item }}</span>
+          <i
+            class="checkBtn fas fa-check"
+            v-bind:class="{ checkBtnCompleted: todoItem.completed }"
+            v-on:click="toggleComplete(todoItem, index)"
+          ></i>
+          <span v-bind:class="{ textCompleted: todoItem.completed }">{{
+            todoItem.item
+          }}</span>
         </span>
-
         <span class="removeBtn" type="button" v-on:click="removeTodo(todoItem, index)">
           <i class="fas fa-trash-alt"></i>
         </span>
@@ -17,24 +26,24 @@
 
 <script>
 export default {
-  data: function() {
+  data: function () {
     return {
       todoItems: [],
     };
   },
   methods: {
-    removeTodo: function(todoItem, index) {
+    removeTodo: function (todoItem, index) {
       localStorage.removeItem(todoItem);
       this.todoItems.splice(index, 1);
     },
-    toggleComplete: function(todoItem, index) {
+    toggleComplete: function (todoItem, index) {
       console.log(todoItem, index);
       todoItem.completed = !todoItem.completed;
       // 로컬 스토리지의 데이터를 갱신
       localStorage.removeItem(todoItem.item);
       localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
     },
-    sortObj: function(a, b) {
+    sortObj: function (a, b) {
       if (a.item < b.item) {
         return -1;
       }
@@ -44,10 +53,10 @@ export default {
       return 0;
     },
   },
-  created: function() {
+  created: function () {
     if (localStorage.length > 0) {
       for (var i = 0; i < localStorage.length; i++) {
-        if (localStorage.key(i) !== 'loglevel:webpack-dev-server') {
+        if (localStorage.key(i) !== "loglevel:webpack-dev-server") {
           this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
         }
       }
