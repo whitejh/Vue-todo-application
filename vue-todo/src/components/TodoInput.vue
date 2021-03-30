@@ -9,11 +9,16 @@
       <template v-slot:header>
         <h3>
           경고!!
-          <i class="closeModalBtn fas fa-times" @click="showModal = false"> </i>
         </h3>
       </template>
       <template v-slot:body>
         아무것도 입력하지 않으셨습니다.
+      </template>
+      <template v-slot:footer>
+        <button class="closeModalBtn" @click="showModal = false">
+          close
+          <i class="fas fa-times"></i>
+        </button>
       </template>
     </Modal>
   </div>

@@ -22,7 +22,7 @@ export default {
   },
   created: function() {
     if (localStorage.length > 0) {
-      for (var i = 0; i < localStorage.length; i++) {
+      for (let i = 0; i < localStorage.length; i++) {
         if (localStorage.key(i) !== 'loglevel:webpack-dev-server') {
           this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
         }
@@ -42,7 +42,7 @@ export default {
       return 0;
     },
     addOneItem: function(todoItem) {
-      let obj = { completed: false, item: todoItem };
+      const obj = { completed: false, item: todoItem };
       localStorage.setItem(todoItem, JSON.stringify(obj));
 
       // 중요 추가 기능 : todoItems에 이미 같은 값이 있는지 체크!! (list에서 중복 피할 수 있음)
