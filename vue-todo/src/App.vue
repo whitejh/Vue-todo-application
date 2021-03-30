@@ -3,27 +3,31 @@
     <!-- 리펙토링을 통해 실질적인 데이터처리는 App.vue에서 하게 만듦 -->
     <TodoHeader></TodoHeader>
     <TodoInput v-on:addTodoItem="addOneItem"></TodoInput>
-    <TodoList v-bind:propsdata="todoItems" v-on:removeItem="removeOneItem" v-on:toggleItem="toggleOneItem"></TodoList>
+    <TodoList
+      v-bind:propsdata="todoItems"
+      v-on:removeItem="removeOneItem"
+      v-on:toggleItem="toggleOneItem"
+    ></TodoList>
     <TodoFooter v-on:clearAll="clearAllItems"></TodoFooter>
   </div>
 </template>
 
 <script>
-import TodoHeader from './components/TodoHeader.vue';
-import TodoInput from './components/TodoInput.vue';
-import TodoList from './components/TodoList.vue';
-import TodoFooter from './components/TodoFooter.vue';
+import TodoHeader from "./components/TodoHeader.vue";
+import TodoInput from "./components/TodoInput.vue";
+import TodoList from "./components/TodoList.vue";
+import TodoFooter from "./components/TodoFooter.vue";
 
 export default {
-  data: function() {
+  data() {
     return {
       todoItems: [],
     };
   },
-  created: function() {
+  created() {
     if (localStorage.length > 0) {
       for (let i = 0; i < localStorage.length; i++) {
-        if (localStorage.key(i) !== 'loglevel:webpack-dev-server') {
+        if (localStorage.key(i) !== "loglevel:webpack-dev-server") {
           this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
         }
       }
@@ -31,7 +35,7 @@ export default {
     }
   },
   methods: {
-    sortObj: function(a, b) {
+    sortObj(a, b) {
       // 데이터 입력된 순서대로 출력되게 하는 함수
       if (a.item < b.item) {
         return -1;
@@ -41,7 +45,7 @@ export default {
       }
       return 0;
     },
-    addOneItem: function(todoItem) {
+    addOneItem(todoItem) {
       const obj = { completed: false, item: todoItem };
       localStorage.setItem(todoItem, JSON.stringify(obj));
 
@@ -50,16 +54,16 @@ export default {
         this.todoItems.push(obj);
       }
     },
-    removeOneItem: function(todoItem, index) {
+    removeOneItem(todoItem, index) {
       localStorage.removeItem(todoItem.item);
       this.todoItems.splice(index, 1);
     },
-    toggleOneItem: function(todoItem, index) {
+    toggleOneItem(todoItem, index) {
       this.todoItems[index].completed = !this.todoItems[index].completed;
       localStorage.removeItem(todoItem.item);
       localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
     },
-    clearAllItems: function() {
+    clearAllItems() {
       localStorage.clear(); //로컬스토리지를 비운다 (clear API 사용)
       this.todoItems = []; // todoItems를 빈 배열로 바꾼다
     },

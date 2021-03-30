@@ -1,19 +1,20 @@
 <template>
   <div class="inputBox shadow">
-    <input type="text" v-model="newTodoItem" v-on:keyup.enter="addTodo" placeholder="Type what you have to do" />
+    <input
+      type="text"
+      v-model="newTodoItem"
+      v-on:keyup.enter="addTodo"
+      placeholder="Type what you have to do"
+    />
     <span class="addContainer" v-on:click="addTodo">
       <i class="fas fa-plus addBtn"></i>
     </span>
 
     <Modal v-if="showModal" @close="showModal = false">
       <template v-slot:header>
-        <h3>
-          경고!!
-        </h3>
+        <h3>경고!!</h3>
       </template>
-      <template v-slot:body>
-        아무것도 입력하지 않으셨습니다.
-      </template>
+      <template v-slot:body> 아무것도 입력하지 않으셨습니다. </template>
       <template v-slot:footer>
         <button class="closeModalBtn" @click="showModal = false">
           close
@@ -25,26 +26,26 @@
 </template>
 
 <script>
-import Modal from './common/Modal.vue';
+import Modal from "./common/Modal.vue";
 
 export default {
-  data: function() {
+  data() {
     return {
-      newTodoItem: '',
+      newTodoItem: "",
       showModal: false,
     };
   },
   methods: {
-    addTodo: function() {
-      if (this.newTodoItem !== '') {
-        this.$emit('addTodoItem', this.newTodoItem);
+    addTodo() {
+      if (this.newTodoItem !== "") {
+        this.$emit("addTodoItem", this.newTodoItem);
         this.clearInput();
       } else {
         this.showModal = !this.showModal;
       }
     },
-    clearInput: function() {
-      this.newTodoItem = '';
+    clearInput() {
+      this.newTodoItem = "";
     },
   },
   components: {
