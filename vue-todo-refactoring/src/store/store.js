@@ -13,8 +13,19 @@ const storage = {
           arr.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
         }
       }
+      arr.sort(this.sortObj);
     }
     return arr;
+  },
+  sortObj(a, b) {
+    // 데이터 입력된 순서대로 출력되게 하는 함수
+    if (a.item < b.item) {
+      return -1;
+    }
+    if (a.item > b.item) {
+      return 1;
+    }
+    return 0;
   },
 };
 
@@ -23,7 +34,7 @@ export const store = new Vuex.Store({
     todoItems: storage.fetch(),
   },
   getters: {
-    getTodoItems(state) {
+    storedTodoItems(state) {
       return state.todoItems;
     },
   },
@@ -31,7 +42,11 @@ export const store = new Vuex.Store({
     addOneItem(state, todoItem) {
       const obj = { completed: false, item: todoItem };
       localStorage.setItem(todoItem, JSON.stringify(obj));
-      state.todoItems.push(obj);
+
+      // 중요 추가 기능 : todoItems에 이미 같은 값이 있는지 체크!! (list에서 중복 피할 수 있음)
+      if (!state.todoItems.some((data) => data.item == todoItem)) {
+        state.todoItems.push(obj);
+      }
     },
     removeOneItem(state, payload) {
       state.todoItems.splice(payload.index, 1);
