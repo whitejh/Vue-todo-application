@@ -1,2 +1,2 @@
 # Vue-todo-application
-<h1>Vue로 Todolist </h1>
+<h2>Vue로 Todolist 만들기</h2>
